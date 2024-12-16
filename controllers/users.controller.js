@@ -4,7 +4,12 @@ const User = require("../models/users.model.js");
 const customError = require("../utils/customError.js");
 const httpStatusText = require("../utils/httpStatusText.js");
 
-const getAllUsers = errorHandler(async (req, res, next) => {});
+const getAllUsers = errorHandler(async (req, res, next) => {
+  const users = await User.find({}, { __v: false, password: false });
+  return res
+    .status(200)
+    .json({ status: httpStatusText.SUCCESS, data: { users } });
+});
 
 const getSingleUser = errorHandler(async (req, res, next) => {});
 
@@ -20,7 +25,10 @@ const addUser = errorHandler(async (req, res, next) => {
       )
     );
   }
-  const hashedPassword = await bcrypt.hash(password, 8);
+  const hashedPassword = await bcrypt.hash(
+    password,
+    +process.env.SECERT_SALT_KEY
+  );
 
   let newUser = new User({
     username,
@@ -39,7 +47,25 @@ const addUser = errorHandler(async (req, res, next) => {
   }
 });
 
-const updateUser = errorHandler(async (req, res, next) => {});
+const updateUser = errorHandler(async (req, res, next) => {
+  const id = req.params.id;
+  if (id) {
+    hashedPassword = await bcrypt.hash(
+      req.body.password,
+      +process.env.SECERT_SALT_KEY
+    );
+    const updatedUser = await User.updateOne(
+      { _id: id },
+      { $set: { password: hashedPassword } }
+    );
+    return res.status(200).json({
+      status: httpStatusText.SUCCESS,
+      data: { updatedUser: updatedUser },
+    });
+  } else {
+    return next(new customError(`update failed`, 500, httpStatusText.ERROR));
+  }
+});
 
 const deleteUser = errorHandler(async (req, res, next) => {});
 
