@@ -9,7 +9,7 @@ const verifyToken = (req, res, next) => {
   if (!authHeaders) {
     return next(new customError("Token is Required", 401, httpStatusTxt.ERROR));
   }
-  const token = authHeaders.split(" ");
+  const token = authHeaders.split(" ")[1];
   try {
     const decodedToken = jwt.verify(token, process.env.SECRET_JWT_KEY);
     next();
@@ -19,3 +19,5 @@ const verifyToken = (req, res, next) => {
     );
   }
 };
+
+module.exports = verifyToken;
