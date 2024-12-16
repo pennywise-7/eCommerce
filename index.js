@@ -4,6 +4,7 @@ const express = require("express");
 const mongoose = require("mongoose");
 const customError = require("./utils/customError.js");
 const app = express();
+const authRoute = require("./routes/auth.routes.js");
 const userRoute = require("./routes/users.routes.js");
 const productRoute = require("./routes/products.routes.js");
 const cartRoute = require("./routes/carts.routes.js");
@@ -24,13 +25,16 @@ app.use(logger("dev"));
 app.use(express.json());
 
 // End Points
+app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
 app.use("/api/carts", cartRoute);
 app.use("/api/orders", orderRoute);
 
 app.all("*", (req, res, next) => {
-  return next(new customError("Not Found", 404, httpStatusText.FAIL));
+  return next(
+    new customError("Resource is not found", 404, httpStatusText.FAIL)
+  );
 });
 
 app.use((err, req, res, next) => {
