@@ -13,6 +13,11 @@ const login = errorHandler(async (req, res, next) => {
   }
   const match = await bcrypt.compare(password, user.password);
   if (match) {
+    const token = await generateToken({
+      id: user._id,
+      isAdmin: user.isAdmin,
+    });
+    user.token = token;
     return res
       .status(200)
       .json({ status: httpStatusText.SUCCESS, data: { user } });
