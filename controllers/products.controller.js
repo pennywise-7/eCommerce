@@ -8,11 +8,21 @@ const getAllProducts = errorHandler(async (req, res, next) => {
   try {
     const page = +req.query.page || 5;
     const limit = +req.query.limit || 1;
-
+    const recent = req.query.recent || true;
+    const category = req.query.category || false;
     const skip = (page - 1) * limit;
-    const products = await Product.find({}, { _id: false, __v: false })
-      .limit(limit)
-      .skip(skip);
+    let products;
+    if (recent) {
+      products = await Product.find({}, { _id: false, __v: false })
+        .sort({ createdAt: -1 })
+        .limit(limit)
+        .skip(skip);
+    } else if (category) {
+      products = await Product.find({}, { _id: false, __v: false })
+        .sort({ categories: { $in: [category] } })
+        .limit(limit)
+        .skip(skip);
+    }
     return res
       .status(200)
       .json({ status: httpStatusText.SUCCESS, data: { products } });
