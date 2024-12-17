@@ -7,8 +7,8 @@ const e = require("express");
 
 const getAllProducts = errorHandler(async (req, res, next) => {
   try {
-    const page = +req.query.page || 5;
-    const limit = +req.query.limit || 1;
+    const page = +req.query.page || 1;
+    const limit = +req.query.limit || 2;
     const recent = req.query.recent;
     const category = req.query.category;
     const skip = (page - 1) * limit;
@@ -17,7 +17,9 @@ const getAllProducts = errorHandler(async (req, res, next) => {
     let products;
     if (recent) {
       products = await Product.find({}, { _id: false, __v: false })
-        .sort({ createdAt: -1 })
+        .sort({
+          createdAt: -1,
+        })
         .limit(limit)
         .skip(skip);
     } else if (category) {
