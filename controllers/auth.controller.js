@@ -5,6 +5,10 @@ const customError = require("../utils/customError.js");
 const httpStatusText = require("../utils/httpStatusText.js");
 const generateToken = require("../utils/generateJWT.js");
 
+const renderLogin = errorHandler(async (req, res, next) => {
+  res.render('login.ejs');
+});
+
 const login = errorHandler(async (req, res, next) => {
   const { username, password } = req.body;
   const user = await User.findOne({ username: username });
@@ -69,4 +73,5 @@ const register = errorHandler(async (req, res, next) => {
 module.exports = {
   login,
   register,
+  renderLogin
 };

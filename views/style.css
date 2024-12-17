@@ -9,7 +9,6 @@ body {
   justify-content: center;
   align-items: center;
   min-height: 100vh;
-  background: url("./img.jpg") no-repeat;
 }
 .wrapper {
   width: 420px;

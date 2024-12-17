@@ -4,6 +4,6 @@ const verfiyToken = require("../middlewares/verifyToken.js");
 
 router.route("/register").post(authController.register);
 
-router.route("/login").post(authController.login);
+router.route("/login").get(authController.renderLogin).post(authController.login);
 
 module.exports = router;
