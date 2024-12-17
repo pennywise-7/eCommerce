@@ -1,15 +1,11 @@
 const router = require("express").Router();
-const orderController = require("../controllers/orders.controller.js");
+const ordersController = require("../controllers/orders.controller.js");
+const verfiyToken = require("../middlewares/verifyToken.js");
 
-router
-  .route("/")
-  .get(orderController.getAllOrders)
-  .post(orderController.addOrder);
-
-router
-  .route("/:id")
-  .get(orderController.getSingleOrder)
-  .patch(orderController.updateOrder)
-  .delete(orderController.deleteOrder);
+router.route("/").get(verfiyToken, ordersController.getAllOrders);
+router.route("/").post(verfiyToken, ordersController.addOrder);
+router.route("/find/:id").get(ordersController.getUserOrders);
+router.route("/update/:id").patch(verfiyToken, ordersController.updateOrder);
+router.route("/delete/:id").delete(verfiyToken, ordersController.deleteOrder);
 
 module.exports = router;

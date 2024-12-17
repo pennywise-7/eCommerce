@@ -1,9 +1,7 @@
-const bcrypt = require("bcrypt");
 const errorHandler = require("../middlewares/errorHandler.js");
 const Product = require("../models/Products.model.js");
 const customError = require("../utils/customError.js");
 const httpStatusText = require("../utils/httpStatusText.js");
-const e = require("express");
 
 const getAllProducts = errorHandler(async (req, res, next) => {
   try {
