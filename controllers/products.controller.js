@@ -6,7 +6,13 @@ const httpStatusText = require("../utils/httpStatusText.js");
 
 const getAllProducts = errorHandler(async (req, res, next) => {
   try {
-    const products = await Product.find({}, { _id: false, __v: false });
+    const page = +req.query.page || 5;
+    const limit = +req.query.limit || 1;
+
+    const skip = (page - 1) * limit;
+    const products = await Product.find({}, { _id: false, __v: false })
+      .limit(limit)
+      .skip(skip);
     return res
       .status(200)
       .json({ status: httpStatusText.SUCCESS, data: { products } });

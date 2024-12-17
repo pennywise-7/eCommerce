@@ -25,9 +25,7 @@ app.use(logger("dev"));
 app.use(express.json());
 
 // End Points
-app.use("/", (req, res) => {
-  res.end("<h1>Home Page</h1>");
-});
+
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);
