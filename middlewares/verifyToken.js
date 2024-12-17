@@ -14,7 +14,6 @@ const verifyToken = async (req, res, next) => {
       if (err) {
         return next(new customError(err.message, 400, httpStatusTxt.FAIL));
       }
-      console.log(user);
       if (req.params.id === user.id || user.isAdmin) {
         next();
       } else {
