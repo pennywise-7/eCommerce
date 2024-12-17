@@ -7,7 +7,7 @@ router.route("/").get(verfiyToken, userController.getAllUsers);
 router
   .route("/:id")
   .get(userController.getSingleUser)
-  .patch(userController.updateUser)
+  .patch(verfiyToken, userController.updateUser)
   .delete(userController.deleteUser);
 
 module.exports = router;

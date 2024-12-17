@@ -54,10 +54,9 @@ const updateUser = errorHandler(async (req, res, next) => {
       req.body.password,
       +process.env.SECERT_SALT_KEY
     );
-    const updatedUser = await User.updateOne(
-      { _id: id },
-      { $set: { password: hashedPassword } }
-    );
+    const updatedUser = await User.findByIdAndUpdate(id, {
+      $set: { password: hashedPassword },
+    });
     return res.status(200).json({
       status: httpStatusText.SUCCESS,
       data: { updatedUser: updatedUser },

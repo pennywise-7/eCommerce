@@ -52,8 +52,8 @@ const register = errorHandler(async (req, res, next) => {
     isAdmin,
   });
   const token = await generateToken({
-    username: newUser.username,
     id: newUser._id,
+    isAdmin: newUser.isAdmin,
   });
   newUser.token = token;
   try {
