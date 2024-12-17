@@ -6,7 +6,19 @@ const httpStatusText = require("../utils/httpStatusText.js");
 
 const getAllUsers = errorHandler(async (req, res, next) => {
   try {
-    const users = await User.find({}, { __v: false, password: false });
+    // const users = await User.find(
+    //   {},
+    //   {
+    //     __v: false,
+    //     _id: false,
+    //     token: false,
+    //     isAdmin: false,
+    //     password: false,
+    //     createdAt: false,
+    //     updatedAt: false,
+    //   }
+    // );
+    const users = await User.find({}).select("username email");
     return res
       .status(200)
       .json({ status: httpStatusText.SUCCESS, data: { users } });
@@ -21,7 +33,7 @@ const getAllUsers = errorHandler(async (req, res, next) => {
 
 const getSingleUser = errorHandler(async (req, res, next) => {
   try {
-    const user = await User.findById(req.params.id);
+    const user = await User.findById(req.params.id).select("username email");
     return res.status(200).json({ status: httpStatusText.SUCCESS, data: user });
   } catch (error) {
     return next(
