@@ -5,39 +5,56 @@ const customError = require("../utils/customError.js");
 const httpStatusText = require("../utils/httpStatusText.js");
 
 const getAllUsers = errorHandler(async (req, res, next) => {
-  const users = await User.find({}, { __v: false, password: false });
-  return res
-    .status(200)
-    .json({ status: httpStatusText.SUCCESS, data: { users } });
-});
-
-const getSingleUser = errorHandler(async (req, res, next) => {});
-
-const addUser = errorHandler(async (req, res, next) => {
-  const { username, email, password, isAdmin } = req.body;
-
-  if (!password) {
+  try {
+    const users = await User.find({}, { __v: false, password: false });
+    return res
+      .status(200)
+      .json({ status: httpStatusText.SUCCESS, data: { users } });
+  } catch (error) {
     return next(
-      new customError(
-        "Bad Input or missing values => { password }",
-        400,
-        httpStatusText.FAIL
-      )
+      new customError(`can't find this user: ${error.message} `),
+      500,
+      httpStatusText.ERROR
     );
   }
-  const hashedPassword = await bcrypt.hash(
-    password,
-    +process.env.SECERT_SALT_KEY
-  );
+});
 
-  let newUser = new User({
-    username,
-    email,
-    password: hashedPassword,
-    isAdmin,
-  });
-
+const getSingleUser = errorHandler(async (req, res, next) => {
   try {
+    const user = await User.findById(req.params.id);
+    return res.status(200).json({ status: httpStatusText.SUCCESS, data: user });
+  } catch (error) {
+    return next(
+      new customError(`can't find this user: ${error.message} `),
+      404,
+      httpStatusText.FAIL
+    );
+  }
+});
+
+const addUser = errorHandler(async (req, res, next) => {
+  try {
+    const { username, email, password, isAdmin } = req.body;
+    if (!password) {
+      return next(
+        new customError(
+          "Bad Input or missing values => { password }",
+          400,
+          httpStatusText.FAIL
+        )
+      );
+    }
+    const hashedPassword = await bcrypt.hash(
+      password,
+      +process.env.SECERT_SALT_KEY
+    );
+
+    let newUser = new User({
+      username,
+      email,
+      password: hashedPassword,
+      isAdmin,
+    });
     await newUser.save();
     return res
       .status(201)
@@ -59,7 +76,7 @@ const updateUser = errorHandler(async (req, res, next) => {
     });
     return res.status(200).json({
       status: httpStatusText.SUCCESS,
-      data: { updatedUser: updatedUser },
+      data: updatedUser,
     });
   } else {
     return next(new customError(`update failed`, 500, httpStatusText.ERROR));
@@ -69,14 +86,16 @@ const updateUser = errorHandler(async (req, res, next) => {
 const deleteUser = errorHandler(async (req, res, next) => {
   try {
     const deletedUser = await User.findByIdAndDelete(req.params.id);
-    return res
-      .status(200)
-      .json({ message: "User has been removed", data: { deletedUser } });
+    return res.status(200).json({
+      status: httpStatusText.SUCCESS,
+      message: "User has been removed",
+      data: deletedUser,
+    });
   } catch (error) {
     return next(
       new customError(`can't delete this user: ${error.message} `),
       500,
-      httpStatusText.FAIL
+      httpStatusText.ERROR
     );
   }
 });
