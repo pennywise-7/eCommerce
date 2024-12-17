@@ -3,14 +3,17 @@ const errorHandler = require("../middlewares/errorHandler.js");
 const Product = require("../models/Products.model.js");
 const customError = require("../utils/customError.js");
 const httpStatusText = require("../utils/httpStatusText.js");
+const e = require("express");
 
 const getAllProducts = errorHandler(async (req, res, next) => {
   try {
     const page = +req.query.page || 5;
     const limit = +req.query.limit || 1;
-    const recent = req.query.recent || true;
-    const category = req.query.category || false;
+    const recent = req.query.recent;
+    const category = req.query.category;
     const skip = (page - 1) * limit;
+    console.log(recent, category);
+
     let products;
     if (recent) {
       products = await Product.find({}, { _id: false, __v: false })
@@ -18,10 +21,9 @@ const getAllProducts = errorHandler(async (req, res, next) => {
         .limit(limit)
         .skip(skip);
     } else if (category) {
-      products = await Product.find({}, { _id: false, __v: false })
-        .sort({ categories: { $in: [category] } })
-        .limit(limit)
-        .skip(skip);
+      products = await Product.find({ categories: { $in: [category] } });
+    } else {
+      products = await Product.find({}, { _id: false, __v: false });
     }
     return res
       .status(200)
