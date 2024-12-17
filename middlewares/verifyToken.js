@@ -31,15 +31,3 @@ const verifyToken = async (req, res, next) => {
 };
 
 module.exports = verifyToken;
-
-// "newUser": {
-//             "username": "admin",
-//             "email": "admin@admin.com",
-//             "password": "$2b$08$tITtCWMDjaY0VcDzM4CGxeJFInYpDFrLyKOBCHHDXbOHgPzp8JRU6",
-//             "isAdmin": true,
-//             "_id": "676134c0558a24813530809c",
-//             "token": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImFkbWluIiwiaWQiOiI2NzYxMzRjMDU1OGEyNDgxMzUzMDgwOWMiLCJpYXQiOjE3MzQ0MjM3NDQsImV4cCI6MTczNDUxMDE0NH0.zd3HiQSNyPUvt_qv3AUNV7P7ktcVl_-Jj7B6LUJYA4M",
-//             "createdAt": "2024-12-17T08:22:24.806Z",
-//             "updatedAt": "2024-12-17T08:22:24.806Z",
-//             "__v": 0
-//         }

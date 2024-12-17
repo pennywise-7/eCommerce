@@ -8,6 +8,6 @@ router
   .route("/:id")
   .get(userController.getSingleUser)
   .patch(verfiyToken, userController.updateUser)
-  .delete(userController.deleteUser);
+  .delete(verfiyToken, userController.deleteUser);
 
 module.exports = router;

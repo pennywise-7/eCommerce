@@ -66,7 +66,20 @@ const updateUser = errorHandler(async (req, res, next) => {
   }
 });
 
-const deleteUser = errorHandler(async (req, res, next) => {});
+const deleteUser = errorHandler(async (req, res, next) => {
+  try {
+    const deletedUser = await User.findByIdAndDelete(req.params.id);
+    return res
+      .status(200)
+      .json({ message: "User has been removed", data: { deletedUser } });
+  } catch (error) {
+    return next(
+      new customError(`can't delete this user: ${error.message} `),
+      500,
+      httpStatusText.FAIL
+    );
+  }
+});
 
 module.exports = {
   getAllUsers,
