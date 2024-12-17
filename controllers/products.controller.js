@@ -21,7 +21,10 @@ const getAllProducts = errorHandler(async (req, res, next) => {
 
 const getSingleProduct = errorHandler(async (req, res, next) => {
   try {
-    const product = await Product.findById(req.params.id).select("title ");
+    const product = await Product.findById(req.params.id, {
+      _id: false,
+      __v: false,
+    });
     return res
       .status(200)
       .json({ status: httpStatusText.SUCCESS, data: product });
@@ -36,27 +39,7 @@ const getSingleProduct = errorHandler(async (req, res, next) => {
 
 const addProduct = errorHandler(async (req, res, next) => {
   try {
-    const { productname, email, password, isAdmin } = req.body;
-    if (!password) {
-      return next(
-        new customError(
-          "Bad Input or missing values => { password }",
-          400,
-          httpStatusText.FAIL
-        )
-      );
-    }
-    const hashedPassword = await bcrypt.hash(
-      password,
-      +process.env.SECERT_SALT_KEY
-    );
-
-    let newProduct = new Product({
-      productname,
-      email,
-      password: hashedPassword,
-      isAdmin,
-    });
+    let newProduct = new Product({ ...req.body });
     await newProduct.save();
     return res
       .status(201)
@@ -69,13 +52,12 @@ const addProduct = errorHandler(async (req, res, next) => {
 const updateProduct = errorHandler(async (req, res, next) => {
   const id = req.params.id;
   if (id) {
-    hashedPassword = await bcrypt.hash(
-      req.body.password,
-      +process.env.SECERT_SALT_KEY
+    const updatedProduct = await Product.updateOne(
+      { _id: id },
+      {
+        $set: { ...req.body },
+      }
     );
-    const updatedProduct = await Product.findByIdAndUpdate(id, {
-      $set: { password: hashedPassword },
-    });
     return res.status(200).json({
       status: httpStatusText.SUCCESS,
       data: updatedProduct,
