@@ -12,6 +12,8 @@ const orderRoute = require("./routes/orders.routes.js");
 const httpStatusText = require("./utils/httpStatusText.js");
 const logger = require("morgan");
 const cors = require("cors");
+const fs = require("node:fs");
+const indexPage = fs.readFileSync("./public/html/index.html", "utf-8");
 
 mongoose
   .connect(process.env.MONGO_CONN_STR)
@@ -27,8 +29,9 @@ app.use(express.static("public"));
 
 // End Points
 
-app.set("view engine", "ejs");
-
+app.use("/home", (req, res) => {
+  res.send(indexPage);
+});
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);
 app.use("/api/products", productRoute);

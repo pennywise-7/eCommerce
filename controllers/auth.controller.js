@@ -4,9 +4,18 @@ const User = require("../models/users.model.js");
 const customError = require("../utils/customError.js");
 const httpStatusText = require("../utils/httpStatusText.js");
 const generateToken = require("../utils/generateJWT.js");
+const fs = require("node:fs");
+const loginPage = fs.readFileSync(
+  __dirname + "/../public/html/login.html",
+  "utf-8"
+);
+const registerPage = fs.readFileSync(
+  __dirname + "/../public/html/register.html",
+  "utf-8"
+);
 
 const renderLogin = errorHandler(async (req, res, next) => {
-  res.render("login");
+  res.send(loginPage);
 });
 
 const login = errorHandler(async (req, res, next) => {
@@ -34,11 +43,10 @@ const login = errorHandler(async (req, res, next) => {
 });
 
 const renderRegister = errorHandler(async (req, res, next) => {
-  res.render("register");
+  res.send(registerPage);
 });
 const register = errorHandler(async (req, res, next) => {
   const { username, email, password, isAdmin } = req.body;
-  console.log(req.body);
 
   if (!password) {
     return next(
@@ -69,7 +77,7 @@ const register = errorHandler(async (req, res, next) => {
     await newUser.save();
     return res
       .status(201)
-      .json({ status: httpStatusText.SUCCESS, data: { newUser } });
+      .json({ status: httpStatusText.SUCCESS, data: newUser });
   } catch (error) {
     return next(new customError(error.message, 501, httpStatusText.ERROR));
   }
