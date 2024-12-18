@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Login</title>
+    <title>Register</title>
     <link
       href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css"
       rel="stylesheet"
@@ -124,11 +124,11 @@
   <body>
     <div class="wrapper">
       <form
-        action="http://localhost:3000/api/auth/login"
+        action="http://localhost:3000/api/auth/register"
         method="POST"
         id="form"
       >
-        <h1>Login</h1>
+        <h1>Register</h1>
         <div class="input-box">
           <input
             type="text"
@@ -141,6 +141,16 @@
         </div>
         <div class="input-box">
           <input
+            type="text"
+            id="email"
+            name="email"
+            placeholder="email"
+            required
+          />
+          <i class="bx bxs-envelope"></i>
+        </div>
+        <div class="input-box">
+          <input
             type="password"
             name="password"
             id="password"
@@ -149,15 +159,11 @@
           />
           <i class="bx bxs-lock-alt"></i>
         </div>
-        <div class="remember-forget">
-          <label><input type="checkbox" />Remember me</label>
-          <label><a href="#">Forget password?</a></label>
-        </div>
-        <button type="submit" class="btn" id="submit-btn">Login</button>
+        <button type="submit" class="btn" id="submit-btn">Sign Up</button>
         <div class="register-link">
           <p>
-            Don't have any account
-            <a href="http://localhost:3000/api/auth/register">Register</a>
+            already have account
+            <a href="http://localhost:3000/api/auth/login">Login</a>
           </p>
         </div>
       </form>

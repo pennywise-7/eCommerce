@@ -22,12 +22,10 @@ const login = errorHandler(async (req, res, next) => {
       isAdmin: user.isAdmin,
     });
     user.token = token;
-    return res
-      .status(200)
-      .json({
-        status: httpStatusText.SUCCESS,
-        data: { username: user.username, email: user.email },
-      });
+    return res.status(200).json({
+      status: httpStatusText.SUCCESS,
+      data: { username: user.username, email: user.email },
+    });
   } else {
     return next(
       new customError("Wrong password try again", 400, httpStatusText.FAIL)
@@ -35,8 +33,12 @@ const login = errorHandler(async (req, res, next) => {
   }
 });
 
+const renderRegister = errorHandler(async (req, res, next) => {
+  res.render("register");
+});
 const register = errorHandler(async (req, res, next) => {
   const { username, email, password, isAdmin } = req.body;
+  console.log(req.body);
 
   if (!password) {
     return next(
@@ -77,4 +79,5 @@ module.exports = {
   login,
   register,
   renderLogin,
+  renderRegister,
 };
