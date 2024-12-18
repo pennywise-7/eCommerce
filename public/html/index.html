@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>eCommerce Landing Page</title>
+  </head>
+  <style>
+    /* General Reset */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    body {
+      font-family: Arial, sans-serif;
+      line-height: 1.6;
+      color: #333;
+      background-color: #f4f4f4;
+    }
+
+    /* Header Styles */
+    header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 20px;
+      background-color: #333;
+      color: #fff;
+    }
+
+    header .logo a {
+      color: #fff;
+      text-decoration: none;
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    nav ul {
+      display: flex;
+      list-style: none;
+    }
+
+    nav ul li {
+      margin: 0 15px;
+    }
+
+    nav ul li a {
+      color: #fff;
+      text-decoration: none;
+    }
+
+    .account-cart a {
+      color: #fff;
+      margin-left: 15px;
+      text-decoration: none;
+    }
+
+    /* Hero Section */
+    .hero {
+      background: url("https://via.placeholder.com/1600x600") no-repeat center
+        center/cover;
+      height: 400px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      text-align: center;
+      color: #fff;
+    }
+
+    .hero .hero-text {
+      background-color: rgba(0, 0, 0, 0.5);
+      padding: 30px;
+    }
+
+    .hero h1 {
+      font-size: 36px;
+      margin-bottom: 10px;
+    }
+
+    .hero p {
+      font-size: 20px;
+      margin-bottom: 20px;
+    }
+
+    .cta-btn {
+      padding: 10px 20px;
+      background-color: #e91e63;
+      color: #fff;
+      text-decoration: none;
+      font-size: 18px;
+      border-radius: 5px;
+    }
+
+    /* Featured Products Section */
+    .featured-products {
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .featured-products h2 {
+      font-size: 30px;
+      margin-bottom: 30px;
+    }
+
+    .product-container {
+      display: flex;
+      justify-content: center;
+      gap: 30px;
+    }
+
+    .product-card {
+      background-color: #fff;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      text-align: center;
+    }
+
+    .product-card img {
+      width: 100%;
+      border-radius: 5px;
+    }
+
+    .product-card h3 {
+      margin-top: 10px;
+      font-size: 20px;
+    }
+
+    .product-card p {
+      margin-top: 5px;
+      font-size: 18px;
+      color: #e91e63;
+    }
+
+    .btn {
+      display: inline-block;
+      margin-top: 10px;
+      padding: 10px 20px;
+      background-color: #e91e63;
+      color: #fff;
+      text-decoration: none;
+      border-radius: 5px;
+    }
+
+    /* Newsletter Section */
+    .newsletter {
+      background-color: #333;
+      color: #fff;
+      padding: 50px 20px;
+      text-align: center;
+    }
+
+    .newsletter h2 {
+      font-size: 30px;
+      margin-bottom: 20px;
+    }
+
+    .newsletter form {
+      display: flex;
+      justify-content: center;
+      gap: 10px;
+    }
+
+    .newsletter input {
+      padding: 10px;
+      font-size: 16px;
+      width: 300px;
+      border-radius: 5px;
+      border: none;
+    }
+
+    .newsletter button {
+      padding: 10px 20px;
+      background-color: #e91e63;
+      color: #fff;
+      border: none;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    /* Footer Styles */
+    footer {
+      background-color: #222;
+      color: #fff;
+      padding: 20px;
+      text-align: center;
+    }
+
+    footer .footer-links a {
+      color: #fff;
+      margin: 0 15px;
+      text-decoration: none;
+    }
+
+    footer .social-media a {
+      color: #fff;
+      margin: 0 10px;
+      text-decoration: none;
+    }
+
+    footer p {
+      margin-top: 10px;
+      font-size: 14px;
+    }
+  </style>
+  <body>
+    <!-- Header -->
+    <header>
+      <div class="logo">
+        <a href="http://localhost:3000/home">BrandName</a>
+      </div>
+      <nav>
+        <ul>
+          <li><a href="http://localhost:3000/home">Home</a></li>
+          <li><a href="http://localhost:3000/api/products">Shop</a></li>
+          <li><a href="#">About Us</a></li>
+          <li><a href="#">Contact</a></li>
+        </ul>
+      </nav>
+      <div class="account-cart">
+        <a href="http://localhost:3000/api/auth/login">Login</a> |
+        <a href="#">Cart (0)</a>
+      </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+      <div class="hero-text">
+        <h1>Winter Collection Sale - Up to 50% Off!</h1>
+        <p>Free shipping on orders over $50</p>
+        <a href="http://localhost:3000/api/product" class="cta-btn">Shop Now</a>
+      </div>
+    </section>
+
+    <!-- Featured Products Section -->
+    <section class="featured-products">
+      <h2>Featured Products</h2>
+      <div class="product-container">
+        <div class="product-card">
+          <img src="https://via.placeholder.com/200" alt="Product 1" />
+          <h3>Product 1</h3>
+          <p>$19.99</p>
+          <a href="#" class="btn">View Details</a>
+        </div>
+        <div class="product-card">
+          <img src="https://via.placeholder.com/200" alt="Product 2" />
+          <h3>Product 2</h3>
+          <p>$29.99</p>
+          <a href="#" class="btn">View Details</a>
+        </div>
+        <div class="product-card">
+          <img src="https://via.placeholder.com/200" alt="Product 3" />
+          <h3>Product 3</h3>
+          <p>$49.99</p>
+          <a href="#" class="btn">View Details</a>
+        </div>
+      </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+      <div class="footer-links">
+        <a href="#">Privacy Policy</a>
+        <a href="#">Terms & Conditions</a>
+        <a href="#">FAQ</a>
+      </div>
+      <p>&copy; 2024 BrandName. All Rights Reserved.</p>
+    </footer>
+  </body>
+</html>
