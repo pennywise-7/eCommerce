@@ -23,8 +23,11 @@ mongoose
 app.use(cors());
 app.use(logger("dev"));
 app.use(express.json());
+app.use(express.static("public"));
 
 // End Points
+
+app.set("view engine", "ejs");
 
 app.use("/api/auth", authRoute);
 app.use("/api/users", userRoute);

@@ -6,7 +6,7 @@ const httpStatusText = require("../utils/httpStatusText.js");
 const generateToken = require("../utils/generateJWT.js");
 
 const renderLogin = errorHandler(async (req, res, next) => {
-  res.render('login.ejs');
+  res.render("login");
 });
 
 const login = errorHandler(async (req, res, next) => {
@@ -24,7 +24,10 @@ const login = errorHandler(async (req, res, next) => {
     user.token = token;
     return res
       .status(200)
-      .json({ status: httpStatusText.SUCCESS, data: { user } });
+      .json({
+        status: httpStatusText.SUCCESS,
+        data: { username: user.username, email: user.email },
+      });
   } else {
     return next(
       new customError("Wrong password try again", 400, httpStatusText.FAIL)
@@ -73,5 +76,5 @@ const register = errorHandler(async (req, res, next) => {
 module.exports = {
   login,
   register,
-  renderLogin
+  renderLogin,
 };

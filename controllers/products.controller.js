@@ -6,7 +6,7 @@ const httpStatusText = require("../utils/httpStatusText.js");
 const getAllProducts = errorHandler(async (req, res, next) => {
   try {
     const page = +req.query.page || 1;
-    const limit = +req.query.limit || 2;
+    const limit = +req.query.limit || 5;
     const recent = req.query.recent;
     const category = req.query.category;
     const skip = (page - 1) * limit;
